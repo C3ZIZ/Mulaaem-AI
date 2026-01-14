@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'pdf' => [
+        'binary' => env('PDF_BINARY_PATH', '/usr/bin/pdftotext'),
+    ],
+
 ];
