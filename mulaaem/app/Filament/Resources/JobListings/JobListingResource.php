@@ -17,18 +17,18 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\JobListing;
 use App\Enums\UserRole;
-use BackedEnum;
-
 
 class JobListingResource extends Resource
 {
     protected static ?string $model = JobListing::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase; // <--- Changed icon
+// MUST be exactly this type signature:
+    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedBriefcase;
 
-    protected static ?string $navigationGroup = 'Recruitment'; // <--- Added Group
+    // MUST be exactly this type signature:
+    protected static string | \UnitEnum | null $navigationGroup = 'Recruitment';
 
-    protected static ?string $recordTitleAttribute = 'title'; // <--- Changed to actual column name
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema
     {
@@ -62,9 +62,6 @@ class JobListingResource extends Resource
         ];
     }
 
-    /**
-     * SECURITY: Restrict Recruiters to only see their own jobs.
-     */
     public static function getEloquentQuery(): Builder
     {
         $query = parent::getEloquentQuery()
@@ -72,7 +69,6 @@ class JobListingResource extends Resource
                 SoftDeletingScope::class,
             ]);
 
-        // If user is NOT Admin, filter by their ID
         if (! auth()->user()?->hasRole(UserRole::Admin->value)) {
             $query->where('recruiter_id', auth()->id());
         }
