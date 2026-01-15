@@ -18,7 +18,7 @@ enum ApplicationStatus: string implements HasLabel, HasColor
         return ucfirst($this->value);
     }
 
-    public function getColor(): string | array | null
+    public function getColor(): string
     {
         return match ($this) {
             self::Pending => 'gray',

@@ -6,8 +6,8 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Actions\EditAction;
 use App\Enums\JobType;
 
 class JobListingsTable
